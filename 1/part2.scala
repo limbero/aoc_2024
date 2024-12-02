@@ -1,4 +1,4 @@
-object Part2 {
+object Day1Part2 {
   def main(args: Array[String]): Unit = {
     val bufferedSource = io.Source.fromFile("data.txt")
     val lines = bufferedSource.getLines.map(line => line.split("\\s+").toList).toList
