@@ -13,6 +13,8 @@ object Day5Part2 {
     val (rules, updates) =
       lines.patch(transitionLine, Nil, 1).splitAt(transitionLine)
 
+    val rulesTuples = rules.map(str => str.split("\\|").map(_.toInt)).map { case Array(f1,f2) => (f1,f2)}
+
     val rulesMap = rules
       .map(str => str.split("\\|").map(_.toInt).toList)
       .groupBy(_(0))
@@ -40,9 +42,16 @@ object Day5Part2 {
         })
         .filter(_.length > 0)
         .map(update => {
-          val sorted = sort(update, rulesMap)
-          println(sorted)
-          sorted
+          // val sorted = sort(update, rulesMap)
+          // println(sorted)
+          // sorted
+          update.sortWith { case (a,b) => 
+            if (rulesTuples.contains((a,b))) {
+              false
+            } else {
+              true
+            }
+          }
         })
         .map(update => update((update.length - 1) / 2))
         .sum
