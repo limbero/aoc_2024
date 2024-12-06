@@ -1,6 +1,9 @@
+package aoc2024
+
 object Day2Part2 {
   def main(args: Array[String]): Unit = {
-    val bufferedSource = io.Source.fromFile("data.txt")
+    val prefix = "src/main/resources/2/"
+    val bufferedSource = io.Source.fromFile(prefix + "data.txt")
     val reports = bufferedSource.getLines
       .map(line => line.split("\\s+").map(_.toInt).toList)
       .toList
@@ -8,10 +11,10 @@ object Day2Part2 {
       reports
         .filter(report => {
           isSafe(report) || report.zipWithIndex
-            .map((_, idx) => {
+            .map { case (_, idx) => {
               val rep2 = report.patch(idx, Nil, 1)
               isSafe(rep2)
-            })
+            }}
             .filter(_ == true)
             .length > 0
         })
@@ -20,7 +23,7 @@ object Day2Part2 {
   }
 
   def isSafe(report: List[Int]): Boolean = {
-    val diffs = report.zip(report.drop(1)).map((a, b) => a - b)
+    val diffs = report.zip(report.drop(1)).map { case (a, b) => a - b }
 
     val zeroes = diffs.filter(_ == 0)
     val pluses = diffs.filter(_ > 0)

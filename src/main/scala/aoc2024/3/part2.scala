@@ -1,6 +1,9 @@
+package aoc2024
+
 object Day3Part2 {
   def main(args: Array[String]): Unit = {
-    val bufferedSource = io.Source.fromFile("data.txt")
+    val prefix = "src/main/resources/3/"
+    val bufferedSource = io.Source.fromFile(prefix + "data.txt")
     val lines = bufferedSource.getLines.toList
     val re = """mul\(\d{1,3},\d{1,3}\)""".r
 

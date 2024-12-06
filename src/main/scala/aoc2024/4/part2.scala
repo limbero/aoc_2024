@@ -1,6 +1,9 @@
+package aoc2024
+
 object Day4Part2 {
   def main(args: Array[String]): Unit = {
-    val bufferedSource = io.Source.fromFile("data.txt")
+    val prefix = "src/main/resources/4/"
+    val bufferedSource = io.Source.fromFile(prefix + "data.txt")
     val lines = bufferedSource.getLines.toList
     val reString =
       "(?=(M(\\D)M.{" + (lines.length - 1) + "}A.{" + (lines.length - 1) + "}S(\\D)S))"
@@ -19,12 +22,12 @@ object Day4Part2 {
   }
 
   def rotate(board: List[String]): List[String] = {
-    board.zipWithIndex.map((_, idx) => {
+    board.zipWithIndex.map { case (_, idx) => {
       board.zipWithIndex
-        .map((_, jdx) => {
+        .map { case (_, jdx) => {
           board(board.length - jdx - 1)(idx)
-        })
+        }}
         .mkString("")
-    })
+    }}
   }
 }
