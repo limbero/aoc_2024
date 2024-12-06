@@ -1,4 +1,4 @@
-package aoc2024
+package aoc2024.`5`
 
 object Day5Part1 {
   def main(args: Array[String]): Unit = {

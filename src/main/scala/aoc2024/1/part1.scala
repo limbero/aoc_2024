@@ -1,3 +1,5 @@
+package aoc2024.`1`
+
 object Day1Part1 {
   def main(args: Array[String]): Unit = {
     val prefix = "src/main/resources/1/"
