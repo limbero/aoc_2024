@@ -1,6 +1,6 @@
 package aoc2024.`7`
 
-object Day6Part1 {
+object Day7Part1 {
   def main(args: Array[String]): Unit = {
     val prefix = "src/main/resources/7/"
     val bufferedSource = io.Source.fromFile(prefix + "data.txt")
