@@ -2,15 +2,9 @@ package aoc2024.`10`
 
 import scala.collection.mutable.ArrayBuffer
 
-trait Direction
-case object North extends Direction
-case object East extends Direction
-case object South extends Direction
-case object West extends Direction
+object Day10Part2 {
+  implicit val pointOrdering: Ordering[Point] = Ordering.by(p => (p.y, p.x))
 
-case class Point(x: Int, y: Int)
-
-object Day10Part1 {
   def main(args: Array[String]): Unit = {
     val prefix = "src/main/resources/10/"
     val lines = io.Source.fromFile(prefix + "data.txt").getLines.toList
@@ -29,12 +23,14 @@ object Day10Part1 {
     
     val trailheads: List[Point] = trailMap.filter { case (_ -> valueLocTuple) =>
       valueLocTuple._1 == 0
-    }.map { case (loc -> _) => loc }.toList
+    }.map { case (loc -> _) => loc }.toList.sorted
 
     println(trailheads.map { trailhead =>
-      var goals = ArrayBuffer.empty[Point]
-      bfs(trailhead, trailMap, 0, mapSize, goals)
-      goals.toSet.size
+      var goals = ArrayBuffer.empty[List[Point]]
+      bfs(trailhead, trailMap, 0, mapSize, goals, List())
+      // goals.foreach(println(_))
+      // println(goals.toSet.size)
+      goals.length
     }.sum)
   }
 
@@ -43,25 +39,26 @@ object Day10Part1 {
     trailMap: Map[Point, (Int, Point)],
     level: Int,
     mapSize: Int,
-    goals: ArrayBuffer[Point],
+    goals: ArrayBuffer[List[Point]],
+    route: List[Point],
   ): Unit = {
     if (trailMap(from)._1 != level) {
       return
     } else if (level == 9) {
-      goals.addOne(from)
+      goals.addOne(route)
     }
     val nextLevel = level + 1
     go(North, from, trailMap, mapSize) collect {
-      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals)
+      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals, route :+ from)
     }
     go(East, from, trailMap, mapSize) collect {
-      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals)
+      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals, route :+ from)
     }
     go(South, from, trailMap, mapSize) collect {
-      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals)
+      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals, route :+ from)
     }
     go(West, from, trailMap, mapSize) collect {
-      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals)
+      case (_, loc) => bfs(loc, trailMap, nextLevel, mapSize, goals, route :+ from)
     }
   }
 
