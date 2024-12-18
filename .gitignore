@@ -44,4 +44,4 @@ bin/
 *.class
 
 # AOC
-*data.txt
+*data*.txt
