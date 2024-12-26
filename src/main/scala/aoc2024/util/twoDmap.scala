@@ -7,8 +7,20 @@ case object South extends Direction
 case object West extends Direction
 
 case class Point(x: Int, y: Int)
+object Point {
+  implicit val pointOrdering: Ordering[Point] = Ordering.by(p => (p.y, p.x))
+}
 
 object twoDmap {
+  def goDirection(dir: Direction, loc: Point): Point = {
+    dir match {
+      case North => Point(loc.x, loc.y - 1)
+      case East =>  Point(loc.x + 1, loc.y)
+      case South => Point(loc.x, loc.y + 1)
+      case West =>  Point(loc.x - 1, loc.y)
+    }
+  }
+
   def go[T](
     dir: Direction,
     loc: Point,
